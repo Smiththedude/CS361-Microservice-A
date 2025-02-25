@@ -1,2 +1,2 @@
 # CS361-Microservice-A
-/UML.png
+![UML Diagram](./UML.png)
