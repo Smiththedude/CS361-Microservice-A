@@ -6,6 +6,7 @@ import os
 FILE = "licenses.json"
 app = Flask(__name__)
 
+#takes the contents of FILE and converts it into a set of Python objects
 if os.path.exists(FILE):
     with open(FILE, "r") as f:
         try:
@@ -16,14 +17,17 @@ if os.path.exists(FILE):
 else:
     licenses = {}
 
+#copies all licenses from host server onto local .json file
 def save_file():
     with open(FILE, "w") as f:
         json.dump(licenses, f, indent=4)
 
+#prints out all existing licenses to user
 @app.route('/licenses', methods=['GET'])
 def get_all():
     return jsonify(licenses)
 
+#prints out specified license to user
 @app.route('/licenses/<string:license_id>', methods=['GET'])
 def get_license(license_id):
     for license in licenses:
@@ -33,6 +37,7 @@ def get_license(license_id):
             return jsonify(license)
     return jsonify({"error": "License not found"}), 404
 
+#takes license information given by user and adds it to the server
 @app.route('/licenses', methods=['POST'])
 def add_license():
     global licenses
@@ -48,6 +53,7 @@ def add_license():
     save_file()
     return jsonify(new_license), 201
 
+#removes specified license information from host server and local .json file
 @app.route('/licenses/<string:license_id>', methods=['DELETE'])
 def delete_license(license_id):
     global licenses
