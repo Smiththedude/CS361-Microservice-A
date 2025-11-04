@@ -62,6 +62,6 @@ def delete_license(license_id):
     return jsonify({"message": f"License {license_id} deleted"}), 200
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
 
 
